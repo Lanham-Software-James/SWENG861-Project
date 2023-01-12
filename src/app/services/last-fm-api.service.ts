@@ -25,5 +25,9 @@ interface TrackSearchResponse {
 interface TrackSearchDetails {
   'opensearch:startIndex': number,
   'opensearch:totalResults': number,
-  trackmatches: Track[]
+  trackmatches: TrackMatches
+}
+
+interface TrackMatches {
+  track: Track[]
 }
