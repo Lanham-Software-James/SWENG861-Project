@@ -1,1 +1,16 @@
-<p>artist-search-results works!</p>
+<mat-card *ngFor="let artist of artists">
+  <mat-card-header>
+    <mat-card-title>{{ artist.name }}</mat-card-title>
+    <a target="_blank" href="{{ artist.url }}"> 
+      <mat-icon>link</mat-icon>
+    </a>
+  </mat-card-header>
+  
+</mat-card>
+
+<mat-paginator [length]="number_of_results"
+[pageSize]="pageSize"
+[pageSizeOptions]="[10]"
+aria-label="Select page"
+(page)="pageChange($event)">
+</mat-paginator>

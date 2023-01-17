@@ -5,6 +5,7 @@
   </mat-tab>
   <mat-tab label="Search Artist">
     <app-artist-search-form (formSubmit)="searchArtist($event)"></app-artist-search-form>
+    <app-artist-search-results *ngIf="artist_searched" [artist_search_details]="artist_search_details"></app-artist-search-results>  
   </mat-tab>
   <mat-tab label="Search Album">  </mat-tab>
 </mat-tab-group>
