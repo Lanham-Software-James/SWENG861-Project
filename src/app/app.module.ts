@@ -18,6 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TrackSearchFormComponent } from './components/track-search-form/track-search-form.component';
 import { TrackSearchResultsComponent } from './components/track-search-results/track-search-results.component';
 import { ArtistSearchFormComponent } from './components/artist-search-form/artist-search-form.component';
+import { ArtistSearchResultsComponent } from './components/artist-search-results/artist-search-results.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ArtistSearchFormComponent } from './components/artist-search-form/artis
     MusicArtistSearchComponent,
     TrackSearchFormComponent,
     TrackSearchResultsComponent,
-    ArtistSearchFormComponent
+    ArtistSearchFormComponent,
+    ArtistSearchResultsComponent
   ],
   imports: [
     BrowserModule,
