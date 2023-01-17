@@ -17,13 +17,15 @@ import { MusicArtistSearchComponent } from './components/music-artist-search/mus
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TrackSearchFormComponent } from './components/track-search-form/track-search-form.component';
 import { TrackSearchResultsComponent } from './components/track-search-results/track-search-results.component';
+import { ArtistSearchFormComponent } from './components/artist-search-form/artist-search-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MusicArtistSearchComponent,
     TrackSearchFormComponent,
-    TrackSearchResultsComponent
+    TrackSearchResultsComponent,
+    ArtistSearchFormComponent
   ],
   imports: [
     BrowserModule,
