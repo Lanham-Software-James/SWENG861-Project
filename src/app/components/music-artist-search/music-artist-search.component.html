@@ -1,9 +1,11 @@
 <mat-tab-group mat-align-tabs="center">
   <mat-tab label="Search Track">
     <app-track-search-form (formSubmit)="searchTrack($event)"></app-track-search-form>
-    <app-track-search-results *ngIf="searched" [track_search_details]="track_search_details"></app-track-search-results>
+    <app-track-search-results *ngIf="track_searched" [track_search_details]="track_search_details"></app-track-search-results>
   </mat-tab>
-  <mat-tab label="Search Artist">  </mat-tab>
+  <mat-tab label="Search Artist">
+    <app-artist-search-form (formSubmit)="searchArtist($event)"></app-artist-search-form>
+  </mat-tab>
   <mat-tab label="Search Album">  </mat-tab>
 </mat-tab-group>
 
