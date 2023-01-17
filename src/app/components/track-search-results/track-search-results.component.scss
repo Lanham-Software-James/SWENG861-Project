@@ -1,0 +1,27 @@
+mat-card-header {
+  display: grid;
+  grid-template-areas: 
+      'title title'
+      'subtitle button';
+  align-items: center;
+}
+
+mat-card-title {
+  grid-template: 'title';
+  margin: 0;
+}
+
+mat-card-subtitle {
+  grid-template: 'subtitle';
+  margin: 0;
+}
+
+a {
+  grid-template: 'button';
+  justify-self: right;
+  color: black;
+}
+
+a:hover {
+  opacity: 75%;
+}
