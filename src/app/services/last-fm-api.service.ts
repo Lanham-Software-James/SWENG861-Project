@@ -48,5 +48,5 @@ interface ArtistSearchDetails {
 }
 
 interface ArtistMatches {
-  track: Artist[]
+  artist: Artist[]
 }
