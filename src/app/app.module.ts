@@ -20,6 +20,7 @@ import { TrackSearchResultsComponent } from './components/track-search-results/t
 import { ArtistSearchFormComponent } from './components/artist-search-form/artist-search-form.component';
 import { ArtistSearchResultsComponent } from './components/artist-search-results/artist-search-results.component';
 import { AlbumSearchFormComponent } from './components/album-search-form/album-search-form.component';
+import { AlbumSearchResultsComponent } from './components/album-search-results/album-search-results.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { AlbumSearchFormComponent } from './components/album-search-form/album-s
     TrackSearchResultsComponent,
     ArtistSearchFormComponent,
     ArtistSearchResultsComponent,
-    AlbumSearchFormComponent
+    AlbumSearchFormComponent,
+    AlbumSearchResultsComponent
   ],
   imports: [
     BrowserModule,
