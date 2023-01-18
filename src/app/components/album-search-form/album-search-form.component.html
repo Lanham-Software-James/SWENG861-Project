@@ -1,1 +1,13 @@
-<p>album-search-form works!</p>
+<form [formGroup]="album_search_form" (ngSubmit)="search()">
+
+  <mat-form-field appearance="fill">
+    <mat-label>Album Name</mat-label>
+    <input matInput placeholder="Ex. Motion" value="" formControlName="album_name">
+  </mat-form-field>
+
+  <div *ngIf="!album_search_form.valid && album_search_form.controls.album_name.dirty">
+    <p class="error-text">Please enter the track name!</p>
+  </div>
+
+  <button mat-raised-button color="primary" [disabled]="!album_search_form.valid">Search</button>
+</form>

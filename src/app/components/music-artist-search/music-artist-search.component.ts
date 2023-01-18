@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlbumSearchOutput } from 'src/app/interfaces/album-search-output';
 import { ArtistSearchOutput } from 'src/app/interfaces/artist-search-output';
 import { Track } from 'src/app/interfaces/track';
 import { TrackSearchOutput } from 'src/app/interfaces/track-search-output';
@@ -12,16 +13,15 @@ export class MusicArtistSearchComponent implements OnInit {
 
   track_searched: boolean = false;
   artist_searched: boolean = false;
-
-  tracks: Track[] = [];
+  album_searched: boolean = false;
 
   track_search_details!: TrackSearchOutput;
   artist_search_details!: ArtistSearchOutput;
+  album_search_details!: AlbumSearchOutput;
 
   constructor(  ) { }
 
   ngOnInit(): void {
-    
   }
 
   searchTrack($event: TrackSearchOutput): void {
@@ -34,4 +34,8 @@ export class MusicArtistSearchComponent implements OnInit {
     this.artist_search_details = $event;
   }
 
+  searchAlbum($event: AlbumSearchOutput): void {
+    this.album_searched = true;
+    this.album_search_details = $event;
+  }
 }
