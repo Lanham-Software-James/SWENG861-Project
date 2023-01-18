@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Album } from '../interfaces/album';
 import { Artist } from '../interfaces/artist';
 import { Track } from '../interfaces/track';
 
@@ -19,10 +20,15 @@ export class LastFmApiService {
   }
 
   public artistSearch(artist: string, page: number = 0, limit: number = 30): Observable<ArtistSearchResponse> {
-    return this.http.get<any>(`${ environment.last_fm_api_root }?method=artist.search&api_key=${ environment.last_fm_api_key }&artist=${ artist }&page=${ page }&limit=${ limit }&format=json`);
+    return this.http.get<ArtistSearchResponse>(`${ environment.last_fm_api_root }?method=artist.search&api_key=${ environment.last_fm_api_key }&artist=${ artist }&page=${ page }&limit=${ limit }&format=json`);
+  }
+
+  public albumSearch(album: string, page: number = 0, limit: number = 30): Observable<AlbumSearchResponse> {
+    return this.http.get<AlbumSearchResponse>(`${ environment.last_fm_api_root }?method=album.search&api_key=${ environment.last_fm_api_key }&album=${ album }&page=${ page }&limit=${ limit }&format=json`);
   }
 }
 
+//Track Search stuff
 interface TrackSearchResponse {
   results: TrackSearchDetails,
 }
@@ -37,6 +43,7 @@ interface TrackMatches {
   track: Track[]
 }
 
+//Artist Search stuff
 interface ArtistSearchResponse {
   results: ArtistSearchDetails,
 }
@@ -49,4 +56,19 @@ interface ArtistSearchDetails {
 
 interface ArtistMatches {
   artist: Artist[]
+}
+
+//Album Search stuff
+interface AlbumSearchResponse {
+  results: AlbumSearchDetails,
+}
+
+interface AlbumSearchDetails {
+  'opensearch:startIndex': number,
+  'opensearch:totalResults': number,
+  albummatches: AlbumMatches
+}
+
+interface AlbumMatches {
+  album: Album[]
 }
