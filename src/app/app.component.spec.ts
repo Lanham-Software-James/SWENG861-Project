@@ -26,10 +26,10 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('music-artist-search');
   });
 
-  it('should render title', () => {
+  it('should render router-outlet element', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('music-artist-search app is running!');
+    expect(compiled.querySelector('.content section router-outlet')).toBeDefined();
   });
 });
