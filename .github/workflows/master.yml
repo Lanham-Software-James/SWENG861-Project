@@ -3,7 +3,7 @@ name: Master Test and Deploy
 on:
   push:
     branches:
-      - master
+      - mater
 
 jobs:
   test:
@@ -15,20 +15,17 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v3
 
-      - name: Use Node.js 18
+      - name: Use Node.js 16.13.1
         uses: actions/setup-node@v3
         with:
-          node-version: 18.x
+          node-version: 16.13.1
           cache: npm
-        
-      - name: Allowing legacy dependencies
-        run: npm config set legacy-peer-deps true
 
       - name: Install Dependencies    
         run: npm ci
 
       - name: Running Tests
-        run: ng test
+        run: npm run test-dev-headless
     
 
   build:
@@ -42,20 +39,17 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v3
 
-      - name: Use Node.js 18
+      - name: Use Node.js 16.13.1
         uses: actions/setup-node@v3
         with:
-          node-version: 18.x
+          node-version: 16.13.1
           cache: npm
-        
-      - name: Allowing legacy dependencies
-        run: npm config set legacy-peer-deps true
 
       - name: Install Dependencies    
         run: npm ci
 
       - name: Building the project
-        run: ng build
+        run: npm run build
 
       - name: Deploy to my Lightsail instance
         uses: easingthemes/ssh-deploy@v2.1.5
