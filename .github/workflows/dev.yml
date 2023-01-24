@@ -15,10 +15,10 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v3
 
-      - name: Use Node.js 18
+      - name: Use Node.js 16.13.1
         uses: actions/setup-node@v3
         with:
-          node-version: 18.x
+          node-version: 16.13.1
           cache: npm
         
       - name: Allowing legacy dependencies
@@ -42,10 +42,10 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v3
 
-      - name: Use Node.js 18
+      - name: Use Node.js 16.13.1
         uses: actions/setup-node@v3
         with:
-          node-version: 18.x
+          node-version: 16.13.1
           cache: npm
         
       - name: Allowing legacy dependencies
