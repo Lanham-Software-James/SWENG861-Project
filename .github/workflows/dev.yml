@@ -47,9 +47,6 @@ jobs:
         with:
           node-version: 16.13.1
           cache: npm
-        
-      - name: Allowing legacy dependencies
-        run: npm config set legacy-peer-deps true
 
       - name: Install Dependencies    
         run: npm ci
