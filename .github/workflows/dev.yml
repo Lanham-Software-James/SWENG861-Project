@@ -28,7 +28,7 @@ jobs:
         run: npm ci
 
       - name: Running Tests
-        run: ng test
+        run: npm run test
     
 
   build:
@@ -55,7 +55,7 @@ jobs:
         run: npm ci
 
       - name: Building the project
-        run: ng build
+        run: npm run build
 
       - name: Deploy to my Lightsail instance
         uses: easingthemes/ssh-deploy@v2.1.5
