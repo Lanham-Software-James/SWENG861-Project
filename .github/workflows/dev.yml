@@ -28,7 +28,7 @@ jobs:
         run: npm ci
 
       - name: Running Tests
-        run: npm run test
+        run: npm run test-dev-headless
     
 
   build:

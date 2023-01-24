@@ -7,7 +7,9 @@
     "start": "npm run config -- --environment=dev && ng serve",
     "build": "npm run config -- --environment=prod && ng build",
     "watch": "npm run config -- --environment=dev && ng build --watch --configuration development",
-    "test": "npm run config -- --environment=dev && ng test"
+    "test": "npm run config -- --environment=dev && ng test",
+    "test-dev-headless": "npm run config -- --environment=dev && ng test --browsers=ChromeHeadless --watch=false --code-coverage",
+    "test-prod-headless": "npm run config -- --environment=prod && ng test --browsers=ChromeHeadless --watch=false --code-coverage"
   },
   "private": true,
   "dependencies": {
