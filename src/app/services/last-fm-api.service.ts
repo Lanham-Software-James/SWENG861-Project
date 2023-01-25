@@ -29,7 +29,7 @@ export class LastFmApiService {
 }
 
 //Track Search stuff
-interface TrackSearchResponse {
+export interface TrackSearchResponse {
   results: TrackSearchDetails,
 }
 
