@@ -58,5 +58,5 @@ jobs:
           SOURCE: "./dist/"
           REMOTE_HOST: ${{ secrets.SSH_HOST }}
           REMOTE_USER: ${{ secrets.SSH_USER }}
-          TARGET: "/var/www/html/music-artist-album-search-dev"
+          TARGET: "/var/www/html/music-artist-search-dev"
 
