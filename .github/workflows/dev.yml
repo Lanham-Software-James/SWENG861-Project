@@ -49,7 +49,7 @@ jobs:
         run: npm ci
 
       - name: Building the project
-        run: npm run build
+        run: npm run build-dev
 
       - name: Deploy to my Lightsail instance
         uses: easingthemes/ssh-deploy@v2.1.5
