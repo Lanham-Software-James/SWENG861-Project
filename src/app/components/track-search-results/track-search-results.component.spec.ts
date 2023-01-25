@@ -1,17 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { LastFmApiService, TrackSearchResponse } from 'src/app/services/last-fm-api.service';
 
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatCardHarness } from '@angular/material/card/testing';
+import { MatPaginatorHarness } from '@angular/material/paginator/testing';
 
 import { TrackSearchResultsComponent } from './track-search-results.component';
 import { Observable, of } from 'rxjs';
 import { Track } from 'src/app/interfaces/track';
 import { HttpClient } from '@angular/common/http';
-import { SimpleChange, SimpleChanges } from '@angular/core';
+import { SimpleChanges } from '@angular/core';
+
 
 const TEST_TRACK : Track = {
   name: "Test Track",
@@ -45,7 +48,7 @@ describe('TrackSearchResultsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ TrackSearchResultsComponent ],
-      imports: [MatCardModule],
+      imports: [ MatCardModule, MatPaginatorModule ],
       providers: [ { provide: LastFmApiService, useClass: MockLastFmApiService },
                    { provide: HttpClient, useClass: jasmine.createSpy('HttpClient')}]
     })
@@ -101,6 +104,13 @@ describe('TrackSearchResultsComponent', () => {
 
   it('should render mat-card element with correct play button link', async () => {
     expect(compiled.querySelector('mat-card mat-card-header a')?.getAttribute('href')).toBe(component.tracks[0].url);
+  });
+
+  it('should render mat-paginator element with correct details', async () => {
+    const paginator = await loader.getAllHarnesses(MatPaginatorHarness);
+
+    expect((await paginator.length)).toEqual(1);
+    expect((await paginator[0].getPageSize())).toEqual(10);
   });
 
   it('should return a list of tracks length 1 equal to TEST_TRACK when getTracks() is called', () => {
