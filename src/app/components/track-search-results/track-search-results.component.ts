@@ -9,7 +9,7 @@ import { LastFmApiService } from 'src/app/services/last-fm-api.service';
   templateUrl: './track-search-results.component.html',
   styleUrls: ['./track-search-results.component.scss']
 })
-export class TrackSearchResultsComponent implements OnInit, OnChanges {
+export class TrackSearchResultsComponent implements OnChanges {
 
   @Input() track_search_details!: TrackSearchOutput;
 
@@ -21,9 +21,6 @@ export class TrackSearchResultsComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.getTracks(1);
-  }
-
-  ngOnInit(): void {
   }
 
   pageChange($event: PageEvent): void {
