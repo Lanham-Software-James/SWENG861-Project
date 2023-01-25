@@ -50,6 +50,9 @@ jobs:
 
       - name: Building the project
         run: npm run build
+        env:
+          last_fm_api_key: ${{ secrets.last_fm_api_key }}
+          last_fm_api_root: ${{ secrets.last_fm_api_root }}
 
       - name: Deploy to my Lightsail instance
         uses: easingthemes/ssh-deploy@v2.1.5
