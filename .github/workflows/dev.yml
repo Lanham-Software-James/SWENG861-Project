@@ -26,6 +26,9 @@ jobs:
 
       - name: Running Tests
         run: npm run test-dev-headless
+        env:
+          last_fm_api_key: ${{ secrets.LAST_FM_API_KEY }}
+          last_fm_api_root: ${{ secrets.LAST_FM_API_ROOT }}
     
 
   build:
@@ -51,8 +54,8 @@ jobs:
       - name: Building the project
         run: npm run build
         env:
-          last_fm_api_key: ${{ secrets.last_fm_api_key }}
-          last_fm_api_root: ${{ secrets.last_fm_api_root }}
+          last_fm_api_key: ${{ secrets.LAST_FM_API_KEY }}
+          last_fm_api_root: ${{ secrets.LAST_FM_API_ROOT }}
 
       - name: Deploy to my Lightsail instance
         uses: easingthemes/ssh-deploy@v2.1.5
