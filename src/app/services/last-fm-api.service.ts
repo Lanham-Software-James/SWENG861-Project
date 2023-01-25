@@ -6,8 +6,6 @@ import { Album } from '../interfaces/album';
 import { Artist } from '../interfaces/artist';
 import { Track } from '../interfaces/track';
 
-const API_KEY= "ab42aa8d968952e516fe82b051edbb48";
-
 @Injectable({
   providedIn: 'root'
 })
