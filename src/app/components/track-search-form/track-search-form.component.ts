@@ -23,7 +23,10 @@ export class TrackSearchFormComponent implements OnInit {
   }
 
   search(): void {
-    this.formSubmit.emit(this.track_search_form.value);
+    if(this.track_search_form.valid){
+      this.formSubmit.emit(this.track_search_form.value);
+    } else {
+      this.formSubmit.error("Form is not filled properly");
+    }
   }
-
 }

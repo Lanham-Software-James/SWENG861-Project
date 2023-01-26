@@ -1,13 +1,10 @@
 <form [formGroup]="track_search_form" (ngSubmit)="search()">
 
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="fill" SubscriptSizing="dynamic">
     <mat-label>Track Name</mat-label>
     <input matInput placeholder="Ex. Beast of Burden" value="" formControlName="track_name">
+    <mat-error>Please enter the track name!</mat-error>
   </mat-form-field>
-
-  <div *ngIf="!track_search_form.valid && track_search_form.controls.track_name.dirty">
-    <p class="error-text">Please enter the track name!</p>
-  </div>
 
   <mat-form-field appearance="fill">
     <mat-label>Artist Name</mat-label>

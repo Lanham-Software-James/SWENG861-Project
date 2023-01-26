@@ -5,14 +5,32 @@ import { first } from 'rxjs/operators';
 
 import { TrackSearchFormComponent } from './track-search-form.component';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+
+import { MatInputHarness } from '@angular/material/input/testing';
+import { MatFormFieldHarness} from '@angular/material/form-field/testing';
+import { MatButtonHarness } from '@angular/material/button/testing';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+
+const FORM_VALUE : TrackSearchOutput = {
+  track_name: "Test Track",
+  artist_name: "Test Artist"
+} 
+
 describe('TrackSearchFormComponent', () => {
   let component: TrackSearchFormComponent;
   let fixture: ComponentFixture<TrackSearchFormComponent>;
   let compiled: HTMLElement;
+  let loader: HarnessLoader;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TrackSearchFormComponent ]
+      declarations: [ TrackSearchFormComponent ],
+      imports: [ MatFormFieldModule, MatInputModule, BrowserAnimationsModule, MatButtonModule ]
     })
     .compileComponents();
   });
@@ -21,32 +39,47 @@ describe('TrackSearchFormComponent', () => {
     fixture = TestBed.createComponent(TrackSearchFormComponent);
     component = fixture.componentInstance;
     compiled = fixture.nativeElement as HTMLElement;
+    loader = TestbedHarnessEnvironment.loader(fixture);
     fixture.detectChanges();
   });
 
-  it('should create the track-search-form component', () => {
+  it('should create the track-search-form component with correct markup', async() => {
+    const formfields = await loader.getAllHarnesses(MatFormFieldHarness);
+    const inputs = await loader.getAllHarnesses(MatInputHarness);
+    const buttons = await loader.getAllHarnesses(MatButtonHarness);
+
+    //Ensure component rendered
     expect(component).toBeTruthy();
+
+    //Ensure correct number of form fields rendered
+    expect(formfields.length).toEqual(2);
+
+    //Ensure Track Name form field has correct properties
+    expect(await formfields[0].getAppearance()).toEqual("fill");
+    expect(await formfields[0].getLabel()).toEqual("Track Name");
+
+    //Ensure Artist Name form field has correct properties
+    expect(await formfields[1].getAppearance()).toEqual("fill");
+    expect(await formfields[1].getLabel()).toEqual("Artist Name");
+
+    //Ensure correct number of input fields
+    expect(inputs.length).toEqual(2);
+
+    //Ensure Track Name input has correct properties
+    expect(await inputs[0].getPlaceholder()).toEqual("Ex. Beast of Burden");
+    expect(await inputs[0].getType()).toEqual("text");
+    expect(await inputs[0].getValue()).toEqual("");
+
+    //Ensure Artist Name input has correct properties
+    expect(await inputs[1].getPlaceholder()).toEqual("Ex. The Rolling Stones");
+    expect(await inputs[1].getType()).toEqual("text");
+    expect(await inputs[1].getValue()).toEqual("");
+
+    //Ensure submit button have correct properties
+    expect(await buttons.length).toBe(1);
+    expect(await buttons[0].getText()).toEqual("Search");
   });
-
-  it('should render form element', () => {
-    expect(compiled.querySelector('form')).toBeDefined();
-  });
-
-  it('should render two mat-form-field elements', () => {
-    expect(compiled.querySelectorAll('mat-form-field').length).toBe(2);
-  });
-
-  it('should render button element', () => {
-    expect(compiled.querySelector('form button')).toBeDefined();
-  });
-
-  it('should render error text if track_name is dirty and form is invalid', () => {
-    component.track_search_form.controls.track_name.markAsDirty();
-    component.track_search_form.setErrors({'track_name': false});
-
-    expect(compiled.querySelector('form div p')).toBeDefined();
-  });
-
+  
   it('should be invalid if track_name is dirty and null', () => {
     component.track_search_form.controls.track_name.markAsDirty();
     component.track_search_form.controls.track_name.setValue(null);
@@ -54,13 +87,43 @@ describe('TrackSearchFormComponent', () => {
     expect(component.track_search_form.invalid).toBeTrue();
   });
 
-  it('should have button disabled if form is invalid', () => {
+  it('should have button disabled if form is invalid', async() => {
+    const buttons = await loader.getAllHarnesses(MatButtonHarness);
     component.track_search_form.controls.track_name.markAsDirty();
-    component.track_search_form.setErrors({'track_name': false});
+    component.track_search_form.controls.track_name.setValue("");
 
-    expect(compiled.querySelector('form button')?.getAttribute('disabled')).toBe("");
+    expect(await buttons[0].isDisabled()).toBeTrue();
   });
 
+  it('should raise error if search is called without track name', () => {
+    component.track_search_form.controls.track_name.markAsDirty();
+    component.track_search_form.controls.track_name.setValue("");
+    component.search();
+
+    expect(component.formSubmit.hasError).toBeTrue();
+  });
+
+  it('should raise value if search() is called', () => {
+    component.track_search_form.setValue(FORM_VALUE);
+    component.search();
+
+    component.formSubmit.pipe(first()).subscribe((value: TrackSearchOutput) => {
+      expect(value).toEqual(FORM_VALUE);
+    });
+
+    component.search();
+  });
+  
+  it('should raise search value when search() is called', async() => {
+    component.track_search_form.setValue(FORM_VALUE);
+
+    component.formSubmit.pipe(first()).subscribe((value: TrackSearchOutput) => {
+      expect(value).toEqual(FORM_VALUE);
+    });
+
+    component.search();
+  });
+  
   it('should call search() on form submit', () => {
     const form = fixture.debugElement.query(By.css('form'));
     const search = spyOn(component, "search");
@@ -68,23 +131,5 @@ describe('TrackSearchFormComponent', () => {
     form.triggerEventHandler('ngSubmit', null);
 
     expect(search).toHaveBeenCalled();
-  });
-
-  it('should raise search value when searched', async() => {
-    const formValue : TrackSearchOutput = {
-      track_name: "Test Track",
-      artist_name: "Test Artist"
-    } 
-
-    component.track_search_form.setValue({
-      track_name: formValue.track_name,
-      artist_name: formValue.artist_name
-    });
-
-    component.formSubmit.pipe(first()).subscribe((value: TrackSearchOutput) => {
-      expect(value).toEqual(formValue);
-    });
-
-    component.search();
   });
 });
