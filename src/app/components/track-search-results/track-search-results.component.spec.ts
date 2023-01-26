@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatIconModule } from '@angular/material/icon';
 
 import { LastFmApiService, TrackSearchResponse } from 'src/app/services/last-fm-api.service';
 
@@ -8,6 +9,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatCardHarness } from '@angular/material/card/testing';
 import { MatPaginatorHarness } from '@angular/material/paginator/testing';
+import { MatIconHarness } from '@angular/material/icon/testing';
 
 import { TrackSearchResultsComponent } from './track-search-results.component';
 import { Observable, of } from 'rxjs';
@@ -48,7 +50,7 @@ describe('TrackSearchResultsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ TrackSearchResultsComponent ],
-      imports: [ MatCardModule, MatPaginatorModule ],
+      imports: [ MatCardModule, MatPaginatorModule, MatIconModule ],
       providers: [ { provide: LastFmApiService, useClass: MockLastFmApiService },
                    { provide: HttpClient, useClass: jasmine.createSpy('HttpClient')}]
     })
@@ -73,42 +75,25 @@ describe('TrackSearchResultsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('should render the correct number of mat-card elements', async () => {
+  it('should create TrackSearchResults component with correct markup', async() => {
     const cards = await loader.getAllHarnesses(MatCardHarness);
-
-    expect((await cards.length)).toEqual(1);
-  });
-
-  it('should render mat-card element with correct title', async () => {
-    const cards = await loader.getAllHarnesses(MatCardHarness);
-
-    expect((await cards[0].getTitleText())).toEqual(component.tracks[0].name);
-  });
-
-  it('should render mat-card element with correct sub-title', async () => {
-    const cards = await loader.getAllHarnesses(MatCardHarness);
-
-    expect((await cards[0].getSubtitleText())).toEqual(component.tracks[0].artist);
-  });
-
-  it('should render mat-card element with correct mat-icon', async () => {
-    const cards = await loader.getAllHarnesses(MatCardHarness);
-    const text = await cards[0].getText();
-
-    expect((await text.includes("play_circle_outline"))).toBeTrue();
-  });
-
-  it('should render mat-card element with correct play button link', async () => {
-    expect(compiled.querySelector('mat-card mat-card-header a')?.getAttribute('href')).toBe(component.tracks[0].url);
-  });
-
-  it('should render mat-paginator element with correct details', async () => {
+    const icons = await loader.getAllHarnesses(MatIconHarness);
     const paginator = await loader.getAllHarnesses(MatPaginatorHarness);
+    
+    //Ensure component is created
+    expect(component).toBeTruthy();
 
+    //Ensure cards render with correct properties
+    expect(await cards.length).toEqual(1);
+    expect(await cards[0].getTitleText()).toEqual(component.tracks[0].name);
+    expect(await cards[0].getSubtitleText()).toEqual(component.tracks[0].artist);
+
+    //Ensure Icon render with correct properties
+    expect(await icons.length).toEqual(1);
+    expect(await icons[0].getName()).toEqual("play_circle_outline");
+    expect(compiled.querySelector('mat-card mat-card-header a')?.getAttribute('href')).toBe(component.tracks[0].url);
+
+    //Ensure paginator renders with correct properties
     expect((await paginator.length)).toEqual(1);
     expect((await paginator[0].getPageSize())).toEqual(10);
   });
