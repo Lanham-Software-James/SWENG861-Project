@@ -21,7 +21,11 @@ export class ArtistSearchFormComponent implements OnInit {
   }
 
   search(): void {
-    this.formSubmit.emit(this.artist_search_form.value);
+    if(this.artist_search_form.valid){
+      this.formSubmit.emit(this.artist_search_form.value);
+    } else {
+      this.formSubmit.error("Form is not filled properly");
+    }
   }
 
 }
