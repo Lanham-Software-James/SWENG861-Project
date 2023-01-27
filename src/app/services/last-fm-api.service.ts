@@ -42,7 +42,7 @@ interface TrackMatches {
 }
 
 //Artist Search stuff
-interface ArtistSearchResponse {
+export interface ArtistSearchResponse {
   results: ArtistSearchDetails,
 }
 
