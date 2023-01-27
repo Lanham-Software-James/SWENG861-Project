@@ -25,7 +25,7 @@ jobs:
         run: npm ci
 
       - name: Running Tests
-        run: npm run test-dev-headless
+        run: npm run test-headless
         env:
           last_fm_api_key: ${{ secrets.LAST_FM_API_KEY }}
           last_fm_api_root: ${{ secrets.LAST_FM_API_ROOT }}
