@@ -57,7 +57,7 @@ interface ArtistMatches {
 }
 
 //Album Search stuff
-interface AlbumSearchResponse {
+export interface AlbumSearchResponse {
   results: AlbumSearchDetails,
 }
 
