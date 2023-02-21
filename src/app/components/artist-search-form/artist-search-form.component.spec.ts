@@ -1,3 +1,6 @@
+/**
+ * Test class for artist-search-form component
+ */
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -14,16 +17,19 @@ import { ArtistSearchOutput } from 'src/app/interfaces/artist-search-output';
 
 import { ArtistSearchFormComponent } from './artist-search-form.component';
 
+//Test init
 const FORM_VALUE : ArtistSearchOutput = {
   artist_name: "Test Artist"
 } 
 
+//Test init
 describe('ArtistSearchFormComponent', () => {
   let component: ArtistSearchFormComponent;
   let fixture: ComponentFixture<ArtistSearchFormComponent>;
   let compiled: HTMLElement;
   let loader: HarnessLoader;
-
+  
+  //Test init
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ ArtistSearchFormComponent ],
@@ -32,6 +38,7 @@ describe('ArtistSearchFormComponent', () => {
     .compileComponents();
   });
 
+  //Test init
   beforeEach(() => {
     fixture = TestBed.createComponent(ArtistSearchFormComponent);
     component = fixture.componentInstance;
@@ -40,6 +47,7 @@ describe('ArtistSearchFormComponent', () => {
     fixture.detectChanges();
   });
 
+  //Test form markup renders
   it('should create the ArtistSearchForm component with correct markup', async() => {
     const formfields = await loader.getAllHarnesses(MatFormFieldHarness);
     const inputs = await loader.getAllHarnesses(MatInputHarness);
@@ -68,6 +76,7 @@ describe('ArtistSearchFormComponent', () => {
     expect(await buttons[0].getText()).toEqual("Search");
   });
 
+  //Test form is invalid
   it('should be invalid if artist_name is dirty and null', () => {
     component.artist_search_form.controls.artist_name.markAsDirty();
     component.artist_search_form.controls.artist_name.setValue(null);
@@ -75,6 +84,7 @@ describe('ArtistSearchFormComponent', () => {
     expect(component.artist_search_form.invalid).toBeTrue();
   });
 
+  //Test submit button is diabled if form is invalid
   it('should have button disabled if form is invalid', async() => {
     const buttons = await loader.getAllHarnesses(MatButtonHarness);
     component.artist_search_form.controls.artist_name.markAsDirty();
@@ -83,6 +93,7 @@ describe('ArtistSearchFormComponent', () => {
     expect(await buttons[0].isDisabled()).toBeTrue();
   });
 
+  //Test error is raised if form is invalid when submitted
   it('should raise error if search is called without artist name', () => {
     component.artist_search_form.controls.artist_name.markAsDirty();
     component.artist_search_form.controls.artist_name.setValue("");
@@ -91,17 +102,7 @@ describe('ArtistSearchFormComponent', () => {
     expect(component.formSubmit.hasError).toBeTrue();
   });
 
-  it('should raise value if search() is called', () => {
-    component.artist_search_form.setValue(FORM_VALUE);
-    component.search();
-
-    component.formSubmit.pipe(first()).subscribe((value: ArtistSearchOutput) => {
-      expect(value).toEqual(FORM_VALUE);
-    });
-
-    component.search();
-  });
-
+  //Test form value is raised if form is valid when submitted
   it('should raise search value when search() is called', async() => {
     component.artist_search_form.setValue(FORM_VALUE);
 
@@ -112,6 +113,7 @@ describe('ArtistSearchFormComponent', () => {
     component.search();
   });
 
+  //Test search function is called on form submit
   it('should call search() on form submit', () => {
     const form = fixture.debugElement.query(By.css('form'));
     const search = spyOn(component, "search");
