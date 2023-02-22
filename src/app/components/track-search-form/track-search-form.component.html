@@ -1,15 +1,19 @@
+<!--Form group markup-->
 <form [formGroup]="track_search_form" (ngSubmit)="search()">
 
+  <!--Track name input field-->
   <mat-form-field appearance="fill" SubscriptSizing="dynamic">
     <mat-label>Track Name</mat-label>
     <input matInput placeholder="Ex. Beast of Burden" value="" formControlName="track_name">
     <mat-error>Please enter the track name!</mat-error>
   </mat-form-field>
 
+  <!--Artist name input field-->
   <mat-form-field appearance="fill">
     <mat-label>Artist Name</mat-label>
     <input matInput placeholder="Ex. The Rolling Stones" value="" formControlName="artist_name">
   </mat-form-field>
 
+  <!--Submit button-->
   <button mat-raised-button color="primary" [disabled]="!track_search_form.valid">Search</button>
 </form>
