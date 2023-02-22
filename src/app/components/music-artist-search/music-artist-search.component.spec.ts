@@ -1,3 +1,7 @@
+/**
+ * Testing class for music artist search component
+ */
+
 import { ComponentFixture, TestBed, tick } from '@angular/core/testing';
 import { AlbumSearchOutput } from 'src/app/interfaces/album-search-output';
 import { ArtistSearchOutput } from 'src/app/interfaces/artist-search-output';
@@ -12,8 +16,10 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MusicArtistSearchComponent } from './music-artist-search.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+//Test init
 const EXPECTED_TABS = ['Search Track', 'Search Album', 'Search Artist'];
 
+//Test init
 describe('MusicArtistSearchComponent', () => {
   let component: MusicArtistSearchComponent;
   let fixture: ComponentFixture<MusicArtistSearchComponent>;
@@ -21,7 +27,7 @@ describe('MusicArtistSearchComponent', () => {
   let loader: HarnessLoader;
   const expectedTabLabels = ['Search Track', 'Search Album', 'Search Artist'];
   
-
+//Test init
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ MusicArtistSearchComponent ],
@@ -30,6 +36,7 @@ describe('MusicArtistSearchComponent', () => {
     .compileComponents();
   });
 
+  //Test init
   beforeEach(() => {
     fixture = TestBed.createComponent(MusicArtistSearchComponent);
     component = fixture.componentInstance;
@@ -39,6 +46,7 @@ describe('MusicArtistSearchComponent', () => {
     fixture.detectChanges();
   });
 
+  //Test markup is rendered
   it('should create the MusicArtistSearch component with proper markup in default state', async() => {
     const tabgroups = await loader.getAllHarnesses(MatTabGroupHarness);
     const tabs = await loader.getAllHarnesses(MatTabHarness);
@@ -65,6 +73,7 @@ describe('MusicArtistSearchComponent', () => {
     expect(compiled.querySelectorAll('app-album-search-results')?.length).toEqual(0);
   });
 
+  //Test track search
   it('should set track_searched to true, track_search_details to specified value, and render proper markup', async() => {
     const tabs = await loader.getAllHarnesses(MatTabHarness);
     await tabs[0].select();
@@ -85,6 +94,7 @@ describe('MusicArtistSearchComponent', () => {
     expect(compiled.querySelectorAll('app-track-search-results')?.length).toEqual(1);
   });
   
+  //Test artist search
   it('should set artist_searched to true, artist_search_details to specified value, and render proper markup', async() => {
     const tabs = await loader.getAllHarnesses(MatTabHarness);
     await tabs[1].select();
@@ -104,6 +114,7 @@ describe('MusicArtistSearchComponent', () => {
     expect(compiled.querySelectorAll('app-artist-search-results')?.length).toEqual(1);
   });
 
+  //Test album search
   it('should set album_searched to true, album_search_details to specified value, and render proper markup', async() => {
     const tabs = await loader.getAllHarnesses(MatTabHarness);
     await tabs[2].select();

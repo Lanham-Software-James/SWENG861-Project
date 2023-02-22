@@ -1,12 +1,16 @@
+<!--Tab group markup-->
 <mat-tab-group mat-align-tabs="center">
+  <!--Search track components-->
   <mat-tab label="Search Track">
     <app-track-search-form (formSubmit)="searchTrack($event)"></app-track-search-form>
     <app-track-search-results *ngIf="track_searched" [track_search_details]="track_search_details"></app-track-search-results>
   </mat-tab>
+  <!--Serach artist components-->
   <mat-tab label="Search Artist">
     <app-artist-search-form (formSubmit)="searchArtist($event)"></app-artist-search-form>
     <app-artist-search-results *ngIf="artist_searched" [artist_search_details]="artist_search_details"></app-artist-search-results>  
   </mat-tab>
+  <!--Search album components-->
   <mat-tab label="Search Album">
     <app-album-search-form (formSubmit)="searchAlbum($event)"></app-album-search-form>
     <app-album-search-results *ngIf="album_searched" [album_search_details]="album_search_details"></app-album-search-results> 
