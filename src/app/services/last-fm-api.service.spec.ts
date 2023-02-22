@@ -1,3 +1,7 @@
+/**
+ * Test class for last fm api service
+ */
+
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
@@ -6,22 +10,26 @@ import { Track } from '../interfaces/track';
 import { Artist } from '../interfaces/artist';
 import { Album } from '../interfaces/album';
 
+//Test init
 describe('LastFmApiService', () => {
   let service: LastFmApiService;
-  let httpTestingController: HttpTestingController;
+  let httpTestingController: HttpTestingController; //Using stub for http client
 
+  //Test init
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ HttpClientTestingModule ]
     });
     service = TestBed.inject(LastFmApiService);
-    httpTestingController = TestBed.inject(HttpTestingController);
+    httpTestingController = TestBed.inject(HttpTestingController); 
   });
 
+  //Testing the service is created
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
+  //Testing trackSearch()
   it('should return list of type tracks', () => {
     const test_track: Track = {
       name: "Test Track",
@@ -44,6 +52,7 @@ describe('LastFmApiService', () => {
     });
   });
 
+  //Testing artistSearch()
   it('should return list of type artist', () => {
     const test_artist: Artist = {
       name: "Test Track",
@@ -65,6 +74,7 @@ describe('LastFmApiService', () => {
     });
   });
 
+  //Testing albumSearch()
   it('should return list of type album', () => {
     const test_album: Album = {
       name: "Test Track",
