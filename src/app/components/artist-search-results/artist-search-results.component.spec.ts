@@ -1,3 +1,7 @@
+/**
+ * Test class for artist-search-results component
+ */
+
 import { HarnessLoader } from '@angular/cdk/testing/component-harness';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HttpClient } from '@angular/common/http';
@@ -15,11 +19,14 @@ import { ArtistSearchResponse, LastFmApiService } from 'src/app/services/last-fm
 
 import { ArtistSearchResultsComponent } from './artist-search-results.component';
 
+//test init
 const TEST_ARTIST : Artist = {
   name: "Test Artist",
   url: "www.test.test"
 };
 
+//Mock Last Fm API Service class decleration
+//Mock needed over stub becuase I needed to control the return values coming from the class
 class MockLastFmApiService extends LastFmApiService {
   public override artistSearch(artist: string, page?: number, limit?: number): Observable<ArtistSearchResponse> {
     const testResponse : ArtistSearchResponse = {
@@ -36,6 +43,7 @@ class MockLastFmApiService extends LastFmApiService {
   }
 }
 
+//Test init
 describe('ArtistSearchResultsComponent', () => {
   let component: ArtistSearchResultsComponent;
   let fixture: ComponentFixture<ArtistSearchResultsComponent>;
@@ -43,6 +51,7 @@ describe('ArtistSearchResultsComponent', () => {
   let compiled: HTMLElement;
   let loader: HarnessLoader;
 
+  //Test init
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ ArtistSearchResultsComponent ],
@@ -53,6 +62,7 @@ describe('ArtistSearchResultsComponent', () => {
     .compileComponents();
   });
 
+  //Test init
   beforeEach(() => {
     fixture = TestBed.createComponent(ArtistSearchResultsComponent);
     component = fixture.componentInstance;
@@ -70,6 +80,7 @@ describe('ArtistSearchResultsComponent', () => {
     fixture.detectChanges();
   });
 
+  //Test to make sure the markup renders
   it('should create TrackSearchResults component with correct markup', async() => {
     const cards = await loader.getAllHarnesses(MatCardHarness);
     const icons = await loader.getAllHarnesses(MatIconHarness);
@@ -92,12 +103,14 @@ describe('ArtistSearchResultsComponent', () => {
     expect((await paginator[0].getPageSize())).toEqual(10);
   });
 
+  //Test getArtists function
   it('should return a list of artists length 1 equal to TEST_ARTIST when getArtists() is called', () => {
     component.getArtists(1);
     expect(component.artists.length).toEqual(1);
     expect(component.artists[0]).toEqual(TEST_ARTIST);
   });
 
+  //Test pageChange function
   it('should return a list of artists length 1 equal to TEST_ARTIST and pageSize should equal test value when pageChange() is called', () => {    
     const testPage = {
       pageIndex: 1,
@@ -111,6 +124,7 @@ describe('ArtistSearchResultsComponent', () => {
     expect(component.artists[0]).toEqual(TEST_ARTIST);
   });
 
+  //Test onchanges lifecycle hook
   it('should return a list of artists length 1 equal to TEST_ARTIST ngOnChanges() is called', () => {    
     const changes: SimpleChanges = {};
     

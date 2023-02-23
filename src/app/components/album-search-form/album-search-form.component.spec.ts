@@ -1,3 +1,7 @@
+/**
+ * Testing class for album search component
+ */
+
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -14,10 +18,12 @@ import { AlbumSearchOutput } from 'src/app/interfaces/album-search-output';
 
 import { AlbumSearchFormComponent } from './album-search-form.component';
 
+//Test initalization
 const FORM_VALUE : AlbumSearchOutput = {
   album_name: "Test Album",
 } 
 
+//Test initalization
 describe('AlbumSearchFormComponent', () => {
   let component: AlbumSearchFormComponent;
   let fixture: ComponentFixture<AlbumSearchFormComponent>;
@@ -32,6 +38,7 @@ describe('AlbumSearchFormComponent', () => {
     .compileComponents();
   });
 
+  //Test initalization
   beforeEach(() => {
     fixture = TestBed.createComponent(AlbumSearchFormComponent);
     component = fixture.componentInstance;
@@ -40,6 +47,7 @@ describe('AlbumSearchFormComponent', () => {
     fixture.detectChanges();
   });
 
+  //Testing the component is rendered entirely
   it('should create the AlbumSearchForm component with correct markup', async() => {
     const formfields = await loader.getAllHarnesses(MatFormFieldHarness);
     const inputs = await loader.getAllHarnesses(MatInputHarness);
@@ -68,6 +76,7 @@ describe('AlbumSearchFormComponent', () => {
     expect(await buttons[0].getText()).toEqual("Search");
   });
 
+  //Testing form invalidation
   it('should be invalid if album_name is dirty and null', () => {
     component.album_search_form.controls.album_name.markAsDirty();
     component.album_search_form.controls.album_name.setValue(null);
@@ -75,6 +84,7 @@ describe('AlbumSearchFormComponent', () => {
     expect(component.album_search_form.invalid).toBeTrue();
   });
 
+  //Testing if the submit button is disabled when form is invalid
   it('should have button disabled if form is invalid', async() => {
     const buttons = await loader.getAllHarnesses(MatButtonHarness);
     component.album_search_form.controls.album_name.markAsDirty();
@@ -83,6 +93,7 @@ describe('AlbumSearchFormComponent', () => {
     expect(await buttons[0].isDisabled()).toBeTrue();
   });
 
+  //Testing error is raised if invalid form is submitted
   it('should raise error if search is called without album name', () => {
     component.album_search_form.controls.album_name.markAsDirty();
     component.album_search_form.controls.album_name.setValue("");
@@ -90,18 +101,8 @@ describe('AlbumSearchFormComponent', () => {
 
     expect(component.formSubmit.hasError).toBeTrue();
   });
-
-  it('should raise value if search() is called', () => {
-    component.album_search_form.setValue(FORM_VALUE);
-    component.search();
-
-    component.formSubmit.pipe(first()).subscribe((value: AlbumSearchOutput) => {
-      expect(value).toEqual(FORM_VALUE);
-    });
-
-    component.search();
-  });
   
+  //Testing form value is raised when seach is called
   it('should raise search value when search() is called', async() => {
     component.album_search_form.setValue(FORM_VALUE);
 
@@ -112,6 +113,7 @@ describe('AlbumSearchFormComponent', () => {
     component.search();
   });
   
+  //Testing search function is called when form is submitted
   it('should call search() on form submit', () => {
     const form = fixture.debugElement.query(By.css('form'));
     const search = spyOn(component, "search");

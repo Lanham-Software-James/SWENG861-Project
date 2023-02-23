@@ -6,7 +6,7 @@ const { argv } = require('yargs');
 require('dotenv').config();
 const environment = argv.environment;
 
-
+//Function used to write env secerts to enviroment files
 function writeFileUsingFS(targetPath, environmentFileContent) {
   writeFile(targetPath, environmentFileContent, function (err) {
     if (err) {

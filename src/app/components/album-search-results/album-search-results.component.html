@@ -1,4 +1,6 @@
+<!--Results display loop-->
 <mat-card *ngFor="let album of albums">
+  <!--Results display content-->
   <mat-card-header>
     <mat-card-title>{{ album.name }}</mat-card-title>
     <mat-card-subtitle>{{ album.artist }}</mat-card-subtitle>
@@ -6,9 +8,9 @@
       <mat-icon>play_circle_outline</mat-icon>
     </a>
   </mat-card-header>
-  
 </mat-card>
 
+<!--Pagination decleration-->
 <mat-paginator [length]="number_of_results"
 [pageSize]="pageSize"
 [pageSizeOptions]="[10]"

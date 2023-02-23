@@ -1,3 +1,7 @@
+/**
+ * Testing class for album-search-results component 
+ */
+
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HttpClient } from '@angular/common/http';
@@ -15,12 +19,15 @@ import { AlbumSearchResponse, LastFmApiService } from 'src/app/services/last-fm-
 
 import { AlbumSearchResultsComponent } from './album-search-results.component';
 
+//Test init
 const TEST_ALBUM : Album = {
   name: "Test Album",
   artist: "Test Artist",
   url: "www.test.test"
 };
 
+//Mock Last Fm API Service class decleration
+//Mock needed over stub becuase I needed to control the return values coming from the class
 class MockLastFmApiService extends LastFmApiService {
 
   public override albumSearch(album: string, page?: number, limit?: number): Observable<AlbumSearchResponse> {
@@ -38,6 +45,7 @@ class MockLastFmApiService extends LastFmApiService {
   }
 }
 
+//Test init
 describe('AlbumSearchResultsComponent', () => {
   let component: AlbumSearchResultsComponent;
   let fixture: ComponentFixture<AlbumSearchResultsComponent>;
@@ -45,6 +53,7 @@ describe('AlbumSearchResultsComponent', () => {
   let compiled: HTMLElement;
   let loader: HarnessLoader;
 
+  //Test init
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ AlbumSearchResultsComponent ],
@@ -55,6 +64,7 @@ describe('AlbumSearchResultsComponent', () => {
     .compileComponents();
   });
 
+  //Test init
   beforeEach(() => {
     fixture = TestBed.createComponent(AlbumSearchResultsComponent);
     component = fixture.componentInstance;
@@ -72,6 +82,7 @@ describe('AlbumSearchResultsComponent', () => {
     fixture.detectChanges();
   });
 
+  //Testing the proper markup is rendered
   it('should create AlbumSearchResults component with correct markup', async() => {
     const cards = await loader.getAllHarnesses(MatCardHarness);
     const icons = await loader.getAllHarnesses(MatIconHarness);
@@ -95,12 +106,14 @@ describe('AlbumSearchResultsComponent', () => {
     expect((await paginator[0].getPageSize())).toEqual(10);
   });
 
+  //Testing getAlbums funciton
   it('should return a list of albums length 1 equal to TEST_ALBUM when getAlbums() is called', () => {
     component.getAlbums(1);
     expect(component.albums.length).toEqual(1);
     expect(component.albums[0]).toEqual(TEST_ALBUM);
   });
 
+  //Tesitng pageChange function
   it('should return a list of albums length 1 equal to TEST_ALBUM and pageSize should equal test value when pageChange() is called', () => {    
     const testPage = {
       pageIndex: 1,
@@ -114,6 +127,7 @@ describe('AlbumSearchResultsComponent', () => {
     expect(component.albums[0]).toEqual(TEST_ALBUM);
   });
 
+  //Testing on changes lifecycle hook
   it('should return a list of albums length 1 equal to TEST_ALBUM ngOnChanges() is called', () => {    
     const changes: SimpleChanges = {};
     

@@ -1,4 +1,6 @@
+<!--Results display loop-->
 <mat-card *ngFor="let track of tracks">
+  <!--Results display content-->
   <mat-card-header>
     <mat-card-title>{{ track.name }}</mat-card-title>
     <mat-card-subtitle>{{ track.artist }}</mat-card-subtitle>
@@ -8,6 +10,7 @@
   </mat-card-header>
 </mat-card>
 
+<!--Results pagination-->
 <mat-paginator [length]="number_of_results"
 [pageSize]="pageSize"
 [pageSizeOptions]="[10]"

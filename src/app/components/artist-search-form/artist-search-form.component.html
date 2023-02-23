@@ -1,10 +1,13 @@
+<!--Form group markup-->
 <form [formGroup]="artist_search_form" (ngSubmit)="search()">
 
+  <!--Form field markup-->
   <mat-form-field appearance="fill">
     <mat-label>Artist Name</mat-label>
     <input matInput placeholder="Ex. Doja Cat" value="" formControlName="artist_name">
     <mat-error>Please enter the artist name!</mat-error>
   </mat-form-field>
 
+  <!--Submit button markup-->
   <button mat-raised-button color="primary" [disabled]="!artist_search_form.valid">Search</button>
 </form>

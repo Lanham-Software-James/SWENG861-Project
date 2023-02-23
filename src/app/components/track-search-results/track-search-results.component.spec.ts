@@ -1,3 +1,7 @@
+/**
+ * Test class for track search results component
+ */
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -17,13 +21,15 @@ import { Track } from 'src/app/interfaces/track';
 import { HttpClient } from '@angular/common/http';
 import { SimpleChanges } from '@angular/core';
 
-
+//Test init
 const TEST_TRACK : Track = {
   name: "Test Track",
   artist: "Test Artist",
   url: "www.test.test"
 };
 
+//Mock Last Fm API Service class decleration
+//Mock needed over stub becuase I needed to control the return values coming from the class
 class MockLastFmApiService extends LastFmApiService {
   public override trackSearch(track_name: string, artist: string, page?: number, limit?: number): Observable<TrackSearchResponse> {
     const testResponse : TrackSearchResponse = {
@@ -40,6 +46,7 @@ class MockLastFmApiService extends LastFmApiService {
   }
 }
 
+//Test init
 describe('TrackSearchResultsComponent', () => {
   let component: TrackSearchResultsComponent;
   let fixture: ComponentFixture<TrackSearchResultsComponent>;
@@ -47,6 +54,7 @@ describe('TrackSearchResultsComponent', () => {
   let compiled: HTMLElement;
   let loader: HarnessLoader;
 
+  //Test init
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ TrackSearchResultsComponent ],
@@ -57,6 +65,7 @@ describe('TrackSearchResultsComponent', () => {
     .compileComponents();
   });
 
+  //Test init
   beforeEach(() => {
     fixture = TestBed.createComponent(TrackSearchResultsComponent);
     component = fixture.componentInstance;
@@ -75,6 +84,7 @@ describe('TrackSearchResultsComponent', () => {
     fixture.detectChanges();
   });
 
+  //Testing markup is rendered
   it('should create TrackSearchResults component with correct markup', async() => {
     const cards = await loader.getAllHarnesses(MatCardHarness);
     const icons = await loader.getAllHarnesses(MatIconHarness);
@@ -98,12 +108,14 @@ describe('TrackSearchResultsComponent', () => {
     expect((await paginator[0].getPageSize())).toEqual(10);
   });
 
+  //Testing getTracks()
   it('should return a list of tracks length 1 equal to TEST_TRACK when getTracks() is called', () => {
     component.getTracks(1);
     expect(component.tracks.length).toEqual(1);
     expect(component.tracks[0]).toEqual(TEST_TRACK);
   });
 
+  //Testing pageChange()
   it('should return a list of tracks length 1 equal to TEST_TRACK and pageSize should equal test value when pageChange() is called', () => {    
     const testPage = {
       pageIndex: 1,
@@ -117,6 +129,7 @@ describe('TrackSearchResultsComponent', () => {
     expect(component.tracks[0]).toEqual(TEST_TRACK);
   });
 
+  //Testing ngOnChanges lifecycle hook
   it('should return a list of tracks length 1 equal to TEST_TRACK ngOnChanges() is called', () => {    
     const changes: SimpleChanges = {};
     

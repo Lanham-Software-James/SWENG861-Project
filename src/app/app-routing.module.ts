@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MusicArtistSearchComponent } from './components/music-artist-search/music-artist-search.component';
 
+//Defined routes for applicaiton
 const routes: Routes = [
   {
     path: 'home',

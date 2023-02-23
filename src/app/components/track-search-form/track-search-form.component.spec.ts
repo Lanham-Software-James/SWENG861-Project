@@ -1,3 +1,7 @@
+/**
+ * Test class for track-search-form component
+ */
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TrackSearchOutput } from 'src/app/interfaces/track-search-output';
@@ -16,17 +20,20 @@ import { MatButtonHarness } from '@angular/material/button/testing';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
+//Test init
 const FORM_VALUE : TrackSearchOutput = {
   track_name: "Test Track",
   artist_name: "Test Artist"
 } 
 
+//Test init
 describe('TrackSearchFormComponent', () => {
   let component: TrackSearchFormComponent;
   let fixture: ComponentFixture<TrackSearchFormComponent>;
   let compiled: HTMLElement;
   let loader: HarnessLoader;
 
+  //Test init
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ TrackSearchFormComponent ],
@@ -35,6 +42,7 @@ describe('TrackSearchFormComponent', () => {
     .compileComponents();
   });
 
+  //Test init
   beforeEach(() => {
     fixture = TestBed.createComponent(TrackSearchFormComponent);
     component = fixture.componentInstance;
@@ -43,6 +51,7 @@ describe('TrackSearchFormComponent', () => {
     fixture.detectChanges();
   });
 
+  //test markup is rendered
   it('should create the track-search-form component with correct markup', async() => {
     const formfields = await loader.getAllHarnesses(MatFormFieldHarness);
     const inputs = await loader.getAllHarnesses(MatInputHarness);
@@ -80,6 +89,7 @@ describe('TrackSearchFormComponent', () => {
     expect(await buttons[0].getText()).toEqual("Search");
   });
   
+  //Test form validation
   it('should be invalid if track_name is dirty and null', () => {
     component.track_search_form.controls.track_name.markAsDirty();
     component.track_search_form.controls.track_name.setValue(null);
@@ -87,6 +97,7 @@ describe('TrackSearchFormComponent', () => {
     expect(component.track_search_form.invalid).toBeTrue();
   });
 
+  //Test form validation
   it('should have button disabled if form is invalid', async() => {
     const buttons = await loader.getAllHarnesses(MatButtonHarness);
     component.track_search_form.controls.track_name.markAsDirty();
@@ -95,6 +106,7 @@ describe('TrackSearchFormComponent', () => {
     expect(await buttons[0].isDisabled()).toBeTrue();
   });
 
+  //Test form passing error
   it('should raise error if search is called without track name', () => {
     component.track_search_form.controls.track_name.markAsDirty();
     component.track_search_form.controls.track_name.setValue("");
@@ -103,17 +115,7 @@ describe('TrackSearchFormComponent', () => {
     expect(component.formSubmit.hasError).toBeTrue();
   });
 
-  it('should raise value if search() is called', () => {
-    component.track_search_form.setValue(FORM_VALUE);
-    component.search();
-
-    component.formSubmit.pipe(first()).subscribe((value: TrackSearchOutput) => {
-      expect(value).toEqual(FORM_VALUE);
-    });
-
-    component.search();
-  });
-  
+  //Test search function  
   it('should raise search value when search() is called', async() => {
     component.track_search_form.setValue(FORM_VALUE);
 
@@ -124,6 +126,7 @@ describe('TrackSearchFormComponent', () => {
     component.search();
   });
   
+  //Test form submit function
   it('should call search() on form submit', () => {
     const form = fixture.debugElement.query(By.css('form'));
     const search = spyOn(component, "search");
