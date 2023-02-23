@@ -2,7 +2,7 @@
 
 This is my music search application for SWENG 861 - Software Construction, a course in the MSE program at Penn State World Campus.
 
-There is a live deployment availble at music-artist-search.jameslanham.net
+There is a live deployment availble [Music Artist Search](https://music-artist-search.jameslanham.net)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.16.
 
